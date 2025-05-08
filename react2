@@ -1,0 +1,24 @@
+Location
+import { useEffect } from 'react';
+ 
+const LocationMarker = ({ position, map, marker, onRemove }) => {
+  useEffect(() => {
+    if (!marker) return;
+ 
+    const handleClick = () => {
+      if (onRemove) onRemove();
+      marker.setMap(null); // remove from map
+    };
+ 
+    marker.addListener("click", handleClick);
+ 
+    // Cleanup on unmount
+    return () => {
+      window.google.maps.event.clearListeners(marker, "click");
+    };
+  }, [map, position, marker, onRemove]);
+ 
+  return null;
+};
+ 
+export default LocationMarker;
