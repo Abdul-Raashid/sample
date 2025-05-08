@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Employee Registration</title>
+<style>
+
+ 
+      body{
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .registration-form{
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .success-message{
+        color: green;
+        margin-top: 10px;
+        border:1px solid #a8d5a2;
+        background-color: #e6f9e6;
+        padding: 10px;
+        text-align: center;
+      }
+ 
+    </style>
+</head>
+<body>
+<div class="registration-form">
+<form id="registration-form">
+<div class="form-group">
+<label for="studentID">Employee ID</label>
+<input id="studentID" type="text"/>
+<div id="studentID-error" class="form-group error"></div>
+</div>
+<div class="form-group">
+<label for="email">Email</label>
+<input id="email" type="email"/>
+<div id="email-error" class="form-group error">
+</div>
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<input id="password" type="password"/>
+<div id="password-error" class="form-group error"></div>
+</div>
+<button type="submit" class="submit-button">Submit</button>
+<div id="success-message" class="success-message" style="display: none">
+          Registration successful!
+</div>
+</form>
+</div>
+
+ 
+    <script>
+      const registrationForm = document.getElementById("registration-form");
+      const employeeID = document.getElementById("studentID");
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const employeeIDError = document.getElementById("studentID-error");
+      const emailError = document.getElementById("email-error");
+      const passwordError = document.getElementById("password-error");
+      const successMessage = document.getElementById("success-message");
+ 
+     
+ 
+      registrationForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        let errorForm = false
+        employeeIDError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        successMessage.style.display = "none";
+ 
+       const employeeIDValue = employeeID.value.trim();
+        const employeeIDRegex = /^[a-zA-Z0-9]*$/;
+        if (!employeeIDValue) {
+          employeeIDError.textContent = "Employee ID is required.";
+          errorForm = true;
+        }
+        if(employeeIDValue && !employeeIDRegex.test(employeeIDValue)){
+          employeeIDError.textContent = "Student ID can only contain letters and numbers.";
+        }
+        const emailValue = email.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailValue) {
+          emailError.textContent="Email is required."
+        }
+        if (emailValue && !emailRegex.test(emailValue)) {
+          emailError.textContent="Please enter a valid email address."
+        }
+ 
+        const passwordValue = password.value;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        if (!passwordValue) {
+          passwordError.textContent = "Password is required.";
+          errorForm = true;
+        }
+        if (passwordValue && !passwordRegex.test(passwordValue)) {
+          passwordError.textContent =
+            "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+            errorForm = true;
+        }
+ 
+       if (!errorForm) {
+          successMessage.style.display = "block";
+        }
+      });
+</script>
+</body>
+</html>
+ 
